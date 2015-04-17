@@ -1,0 +1,118 @@
+#include "Restaurant.h"
+
+void Restaurant::changeEmployee()
+{
+	string search;
+	int line = 0;
+	string temp;
+	bool found = false;
+	cout << "Which employee do you want to change?(ENTER NAME)\n";
+		getline(cin, search);
+		ifstream fin;
+		fin.open("employeeInfo.txt");
+		if (!fin.good())
+		{
+			cout << "***EMPLOYEE FILE MISSING***\n";
+			system("pause");
+			return;
+		}
+		else
+		{
+			while (!fin.eof())
+			{
+				line++;
+				for (int i = 0; i < 6; i++)
+				{
+					getline(fin, temp);
+					if (i == 0)
+						if (temp == search)
+						{
+						found = true;
+						fin.close();
+						}
+				}
+			}
+		}
+		if (!found)
+		{
+			cout << "***Employee Not Found***\n";
+			system("pause");
+			return;
+		}
+		else
+		{
+			int j = 0;
+			fin.open("employeeInfo.txt");
+			ofstream fout;
+			fout.open("temp.txt");
+			while (j < line)
+			{
+				for (int i = 0; i < 6; i++)
+				{
+					getline(fin, temp);
+					fout << temp;
+				}
+			}
+			for (int i = 0; i < 3; i++)
+			{
+				getline(fin, temp);
+				fout << temp;
+			}
+			getline(fin, temp);
+			cout << "The current phone number is: " << temp << "\n Would you like to change it? (1 for yes, 0 for no)\n";
+			int select;
+			cin >> select;
+			if (select)
+			{
+				cout << "What new phone number would you like?\n";
+				getline(cin, temp);
+				fout << temp;
+			}
+			else
+				fout << temp;
+			getline(fin, temp);
+			cout << "The current address is: " << temp << "\n Would you like to change it? (1 for yes, 0 for no)\n";
+			int select;
+			cin >> select;
+			if (select)
+			{
+				cout << "What new address would you like?\n";
+				getline(cin, temp);
+				fout << temp;
+			}
+			else
+				fout << temp;
+			getline(fin, temp);
+			cout << "The current salary is: " << temp << "\n Would you like to change it? (1 for yes, 0 for no)\n";
+			int select;
+			cin >> select;
+			if (select)
+			{
+				cout << "What new salary would you like?\n";
+				getline(cin, temp);
+				fout << temp;
+			}
+			else
+				fout << temp;
+			while (!fin.eof())
+			{
+				getline(fin, temp);
+				fout << temp;
+			}
+			fin.close();
+			fout.close();
+			fin.open("temp.txt");
+			fout.open("employeeInfo.txt");
+			while (!fin.eof())
+			{
+				getline(fin, temp);
+				fout << temp;
+			}
+			fin.close();
+			fout.close();
+
+		}
+
+}
+
+
